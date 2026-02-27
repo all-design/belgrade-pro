@@ -1719,10 +1719,23 @@ export default function Home() {
             >
               {/* Image */}
               <div className="relative aspect-video bg-gray-200">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-rose-500 opacity-60" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <MapPin className="w-16 h-16 text-white opacity-80" />
-                </div>
+                {selectedLocation.images ? (
+                  <Image
+                    src={JSON.parse(selectedLocation.images)[0]}
+                    alt={selectedLocation.name}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                ) : (
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-rose-500 opacity-60" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <MapPin className="w-16 h-16 text-white opacity-80" />
+                    </div>
+                  </>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <button 
                   onClick={() => setSelectedLocation(null)}
                   className="absolute top-4 right-4 p-2 bg-white rounded-full hover:bg-gray-100 transition-colors"
