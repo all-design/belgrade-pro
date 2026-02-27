@@ -1,8 +1,20 @@
+# Robots.txt for Belgrade PRO
+# https://belgrade.pro
+
 User-agent: Googlebot
 Allow: /
+Allow: /api/locations
+Allow: /api/categories
+Allow: /sitemap.xml
+Disallow: /api/ai-planner
+Disallow: /api/monetization
 
 User-agent: Bingbot
 Allow: /
+Allow: /api/locations
+Allow: /api/categories
+Disallow: /api/ai-planner
+Disallow: /api/monetization
 
 User-agent: Twitterbot
 Allow: /
@@ -10,5 +22,17 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
 User-agent: *
 Allow: /
+Disallow: /api/ai-planner
+Disallow: /api/monetization
+Disallow: /api/cron/
+
+# Sitemap
+Sitemap: https://belgrade.pro/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1

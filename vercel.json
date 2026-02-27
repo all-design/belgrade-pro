@@ -3,6 +3,18 @@
     {
       "path": "/api/cron/seo",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/seo?batch=restaurants",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/seo?batch=hotels",
+      "schedule": "0 12 * * *"
+    },
+    {
+      "path": "/api/cron/seo?batch=nightlife",
+      "schedule": "0 18 * * *"
     }
   ],
   "headers": [
@@ -15,7 +27,7 @@
         },
         {
           "key": "Cache-Control",
-          "value": "public, max-age=3600, s-maxage=3600"
+          "value": "public, max-age=3600, s-maxage=86400"
         }
       ]
     },
@@ -37,7 +49,25 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=60, s-maxage=60"
+          "value": "public, max-age=60, s-maxage=300"
+        }
+      ]
+    },
+    {
+      "source": "/api/gmb",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=3600"
+        }
+      ]
+    },
+    {
+      "source": "/api/locations",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=600"
         }
       ]
     }
