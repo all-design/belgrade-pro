@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Categories for POIs
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  icon        String     // SVG icon name or emoji
+  color       String     // Hex color for markers
+  description String?
+  locations   Location[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+// Locations/POIs
+model Location {
+  id            String    @id @default(cuid())
+  name          String
+  slug          String    @unique
+  description   String
+  shortDesc     String?
+  address       String?
+  latitude      Float
+  longitude     Float
+  images        String?   // JSON array of image URLs
+  rating        Float?    // 0-5 rating
+  priceLevel    Int?      // 1-4 price level ($ to $$$$)
+  phone         String?
+  website       String?
+  bookingUrl    String?   // Affiliate booking link
+  openingHours  String?   // JSON or text
+  featured      Boolean   @default(false)
+  verified      Boolean   @default(false)
+  categoryId    String
+  category      Category  @relation(fields: [categoryId], references: [id])
+  blogPosts     BlogPost[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// Blog posts for AI-generated content
+model BlogPost {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  content     String     // Markdown content
+  excerpt     String?
+  coverImage  String?
+  tags        String?    // JSON array of tags
+  published   Boolean    @default(false)
+  publishedAt DateTime?
+  locationId  String?
+  location    Location?  @relation(fields: [locationId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+// User for admin purposes
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      String   @default("user") // user, admin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// AI-Generated SEO Pages
+model SEOPage {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  metaDescription String
+  content         String   // Markdown content
+  keywords        String   // JSON array of keywords
+  venues          String   // JSON array of venue IDs/names
+  faqSchema       String?  // JSON-LD FAQ schema
+  published       Boolean  @default(false)
+  publishedAt     DateTime?
+  views           Int      @default(0)
+  generatedAt     DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Monetization Events Tracking
+model MonetizationEvent {
+  id           String   @id @default(cuid())
+  type         String   // click, booking_intent, booking_complete, share
+  source       String   // booking, tripadvisor, whatsapp, instagram, pdf
+  venueId      String?
+  venueName    String?
+  venueCategory String?
+  price        Float?
+  currency     String   @default("EUR")
+  userId       String?
+  sessionId    String?
+  metadata     String?  // JSON for additional data
+  revenue      Float?   // Estimated commission
+  createdAt    DateTime @default(now())
+}
+
+// Booking Data Cache (from Booking.com API)
+model BookingHotel {
+  id            String   @id @default(cuid())
+  hotelId       String   @unique // Booking.com hotel ID
+  name          String
+  address       String?
+  latitude      Float
+  longitude     Float
+  rating        Float?
+  price         Float?
+  currency      String  @default("EUR")
+  imageUrl      String?
+  affiliateUrl  String?
+  amenities     String?  // JSON array
+  reviewScore   Float?
+  reviewCount   Int?
+  lastSynced    DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
