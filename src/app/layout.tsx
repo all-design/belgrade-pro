@@ -10,9 +10,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Beograd 2026 🗺️ | belgrade.pro - Interactive Tourist Guide",
-  description: "Discover Belgrade's best attractions, restaurants, hotels & nightlife. AI-powered itineraries, live maps & local secrets. #1 Belgrade travel guide 2026.",
-  keywords: ["Belgrade", "Beograd", "Serbia", "tourist guide", "interactive map", "travel", "landmarks", "restaurants", "hotels", "nightlife", "Skadarlija", "Savamala", "Kalemegdan"],
+  metadataBase: new URL("https://belgrade.pro"),
+  title: "Belgrade PRO 🗺️ | #1 Interactive Tourist Guide 2026",
+  description: "Discover Belgrade's best attractions, restaurants, hotels & nightlife. AI-powered itineraries, live maps & local secrets. 136+ curated locations across 6 categories.",
+  keywords: ["Belgrade", "Beograd", "Serbia", "tourist guide", "interactive map", "travel", "landmarks", "restaurants", "hotels", "nightlife", "Skadarlija", "Savamala", "Kalemegdan", "Saint Sava", "Ada Ciganlija", "splavovi", "Serbian food"],
   authors: [{ name: "Allinclusive.llc", url: "https://allinclusive.llc" }],
   icons: {
     icon: "/favicon.png",
@@ -20,15 +21,47 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   openGraph: {
-    title: "Beograd 2026 🗺️ | belgrade.pro",
-    description: "Discover Belgrade's best attractions, restaurants & nightlife. AI-powered itineraries & live maps.",
+    title: "Belgrade PRO 🗺️ | #1 Interactive Tourist Guide",
+    description: "Discover 136+ best attractions, restaurants & nightlife in Belgrade. AI-powered itineraries & live maps.",
     type: "website",
-    images: ["/belgradePROf.png"],
+    url: "https://belgrade.pro",
+    siteName: "Belgrade PRO",
+    locale: "en_US",
+    images: [
+      {
+        url: "/images/og/belgrade-og.jpg",
+        width: 1344,
+        height: 768,
+        alt: "Belgrade skyline with Kalemegdan fortress and Saint Sava temple at sunset",
+        type: "image/jpeg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Belgrade PRO 🗺️ | #1 Interactive Tourist Guide",
+    description: "Discover 136+ best attractions, restaurants & nightlife in Belgrade. AI-powered itineraries.",
+    images: ["/images/og/belgrade-og.jpg"],
+    creator: "@belgradepro",
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "Belgrade PRO",
+  },
+  alternates: {
+    canonical: "https://belgrade.pro",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -50,7 +83,7 @@ const jsonLd = {
       "name": "belgrade.pro",
       "url": "https://belgrade.pro",
       "logo": "https://belgrade.pro/favicon.png",
-      "description": "Belgrade's #1 interactive tourist guide with AI-powered itineraries",
+      "description": "Belgrade's #1 interactive tourist guide with AI-powered itineraries. 136+ curated locations across 6 categories.",
       "touristInfo": "https://belgrade.pro",
       "aggregateRating": {
         "@type": "AggregateRating",
@@ -62,7 +95,12 @@ const jsonLd = {
         "@type": "PostalAddress",
         "addressLocality": "Belgrade",
         "addressCountry": "RS"
-      }
+      },
+      "sameAs": [
+        "https://www.facebook.com/belgradepro",
+        "https://www.instagram.com/belgradepro",
+        "https://twitter.com/belgradepro"
+      ]
     },
     {
       "@type": "WebSite",
@@ -164,6 +202,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Belgrade PRO" />
+        {/* Preconnect to image domains for faster loading */}
+        <link rel="preconnect" href="https://belgrade.pro" />
+        <link rel="dns-prefetch" href="https://belgrade.pro" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
